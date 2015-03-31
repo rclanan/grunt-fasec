@@ -1,7 +1,7 @@
 {
   "name": "grunt-fasec",
   "description": "Fusion Alliance Security Scanner - Grunt plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/fusionalliance/grunt-fasec",
   "keywords": [
     "grunt",
