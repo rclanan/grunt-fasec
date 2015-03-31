@@ -31,8 +31,7 @@ function eslintScanner(grunt) {
   });
 
   if (grunt.filesSrc.length === 0) {
-    grunt.log.writeln(chalk.magenta(
-      'Could not find any files to validate.'));
+    grunt.log.writeln(chalk.red('Could not find any files to validate.'));
     return;
   }
 

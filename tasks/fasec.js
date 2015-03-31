@@ -1,80 +1,16 @@
 'use strict';
 
 var chalk = require('chalk');
-var eslint = require('eslint');
-var retire = require('retire/lib/retire');
+
+var eslintScanner = require('./utils/eslintscanner');
+
 var repo = require('retire/lib/repo');
 var resolve = require('retire/lib/resolve');
 var log = require('retire/lib/utils').log;
 var scanner = require('retire/lib/scanner');
 var fs = require('fs');
 var path = require('path');
-var req = require('request');
 var os = require('os');
-var async = require('async');
-
-// https://github.com/eslint/eslint/blob/5322a4ab9757eb745030ddcafa076ab5b4317e50/lib/cli.js#L129
-function getErrorResults(results) {
-  var filtered = [];
-
-  results.forEach(function(result) {
-    var filteredMessages = result.messages.filter(function(message) {
-      return message.severity === 2;
-    });
-
-    if (filteredMessages.length > 0) {
-      filtered.push({
-        filePath: result.filePath,
-        messages: filteredMessages
-      });
-    }
-  });
-
-  return filtered;
-}
-
-function esLintScanner(grunt) {
-  var opts = grunt.options({
-    configFile: 'configs/eslint.yml',
-    outputFile: false,
-    quiet: true
-  });
-
-  if (grunt.filesSrc.length === 0) {
-    grunt.log.writeln(chalk.magenta(
-      'Could not find any files to validate.'));
-    return;
-  }
-
-  var engine = new eslint.CLIEngine(opts);
-  var report = engine.executeOnFiles(grunt.filesSrc);
-  var results = report.results;
-
-  if (opts.quiet) {
-    results = getErrorResults(results);
-  }
-
-  var formatter = engine.getFormatter(opts.format);
-
-  if (!formatter) {
-    grunt.warn('Could not find formatter ' + opts.format + '\'.');
-    return;
-  }
-
-  var output = formatter(results);
-
-  if (opts.outputFile) {
-    grunt.file.write(opts.outputFile, output);
-  } else {
-    console.log(output);
-  }
-
-  return (report.errorCount === 0);
-}
-
-function retirejsScanner(grunt) {
-
-}
 
 var eslintScan = false;
 
@@ -82,16 +18,20 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('fasec', 'Fusion Alliance Security Scanner',
     function() {
+      grunt.log.subhead(chalk.bold('Starting Fusion Alliance Security Scanner'));
       // EsLint Scanner
-      eslintScan = esLintScanner(this);
+      grunt.log.subhead(chalk.green('EsLint - Security Rules'));
+      eslintScan = eslintScanner(this);
 
-      // RetireJs Scanner - Clean this up
+      // RetireJs Scanner
+      // TODO: Move into utils folder
+      grunt.log.subhead(chalk.green('Retire.js - Third party module scanner'));
+      grunt.log.writeln();
       var done = this.async();
       var jsRepo = null;
       var nodeRepo = null;
       var vulnsFound = false;
       var filesSrc = this.filesSrc;
-      var request = req;
       var defaultIgnoreFile = '.retireignore';
 
       // Merge task-specific and/or target-specific options with these defaults.
@@ -119,12 +59,11 @@ module.exports = function(grunt) {
 
       if (options.ignorefile) {
         if (!grunt.file.exists(options.ignorefile)) {
-          grunt.log.error('Error: Could not read ignore file: ' + options.ignorefile);
+          grunt.log.error(chalk.red('Error: Could not read ignore file: ' + options.ignorefile));
           process.exit(1);
         }
 
-        var lines = fs.readFileSync(options.ignorefile).toString().split(
-          /\r\n|\n/g).filter(function(e) {
+        var lines = fs.readFileSync(options.ignorefile).toString().split(/\r\n|\n/g).filter(function(e) {
           return e !== '';
         });
 
@@ -139,13 +78,13 @@ module.exports = function(grunt) {
         options.ignore.push(e);
       });
 
-      logger.verbose("Ignoring " + JSON.stringify(options.ignore));
+      logger.verbose('Ignoring ' + JSON.stringify(options.ignore));
 
       // log (verbose) options before hooking in the reporter
       grunt.verbose.writeflags(options, 'Options');
 
       // required to throw proper grunt error
-      scanner.on('vulnerable-dependency-found', function(e) {
+      scanner.on('vulnerable-dependency-found', function() {
         vulnsFound = true;
       });
 
@@ -204,16 +143,13 @@ module.exports = function(grunt) {
             grunt.log.writeln('Checking:', filepath);
           }
 
-          resolve.getNodeDependencies(filepath, options.packageOnly).on(
-            'done',
+          resolve.getNodeDependencies(filepath, options.packageOnly).on('done',
             function(dependencies) {
-              scanner.scanDependencies(dependencies, nodeRepo,
-                options);
+              scanner.scanDependencies(dependencies, nodeRepo, options);
               grunt.event.emit('retire-node-scan', filesSrc.slice(1));
             });
         } else {
-          grunt.log.debug('Skipping. Could not find:', filepath +
-            '/package.json');
+          grunt.log.debug('Skipping. Could not find:', filepath + '/package.json');
           grunt.event.emit('retire-node-scan', filesSrc.slice(1));
         }
       });
@@ -236,7 +172,7 @@ module.exports = function(grunt) {
 
       once('retire-done', function() {
         if (!vulnsFound) {
-          grunt.log.writeln("No vulnerabilities found.");
+          grunt.log.writeln(chalk.green('No vulnerabilities found.'));
         }
 
         events.forEach(function(e) {
@@ -244,16 +180,17 @@ module.exports = function(grunt) {
         });
 
         if(!vulnsFound && eslintScan) {
-          grunt.log.writeln(chalk.green("Fusion Alliance Security Scanner Complete. All Scans Passed"));
+          grunt.log.writeln();
+          grunt.log.writeln(chalk.green('Fusion Alliance Security Scanner Complete. All Scans Passed'));
 
         } else {
-          grunt.log.error("Fusion Alliance Security Scanner Complete. Errors Found. Please review previous messages");
+          grunt.log.writeln();
+          grunt.log.error(chalk.red('Fusion Alliance Security Scanner Complete. Errors Found. Please review previous messages.'));
         }
 
         done(!vulnsFound && eslintScan);
       });
 
-      grunt.event.emit(this.target === 'node' ? 'retire-load-node' :
-        'retire-load-js');
+      grunt.event.emit(this.target === 'node' ? 'retire-load-node' : 'retire-load-js');
     });
 };
