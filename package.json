@@ -1,49 +1,57 @@
 {
-	"name": "grunt-fasec",
-	"description": "Fusion Alliance Security Scanner",
-	"version": "0.1.0",
-	"homepage": "https://github.com/Ray/grunt-fasec",
-	"author": {
-		"name": "Ray Clanan",
-		"email": "rclanan@utopianconcept.com",
-		"url": "http://utopianconcept.com"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/Ray/grunt-fasec.git"
-	},
-	"bugs": {
-		"url": "https://github.com/Ray/grunt-fasec/issues"
-	},
-	"licenses": [{
-		"type": "MIT",
-		"url": "https://github.com/Ray/grunt-fasec/blob/master/LICENSE-MIT"
-	}],
-	"engines": {
-		"node": ">= 0.8.0"
-	},
-	"scripts": {
-		"test": "grunt test"
-	},
-	"devDependencies": {
-		"grunt-contrib-jshint": "^0.9.2",
-		"grunt-contrib-clean": "^0.5.0",
-		"grunt-contrib-nodeunit": "^0.3.3",
-		"grunt": "~0.4.5"
-	},
-	"peerDependencies": {
-		"grunt": "~0.4.5"
-	},
-	"keywords": [
-		"gruntplugin"
-	],
-	"dependencies": {
-		"async": "^0.9.0",
-		"chalk": "^1.0.0",
-		"eslint": "^0.17.1",
-		"eslint-plugin-fasec": "^0.1.1",
-		"request": "^2.53.0",
-		"retire": "^0.4.0",
-		"safe-regex": "^1.1.0"
-	}
+  "name": "grunt-fasec",
+  "description": "Fusion Alliance Security Scanner - Grunt plugin",
+  "version": "0.1.0",
+  "homepage": "https://github.com/fusionalliance/grunt-fasec",
+  "keywords": [
+    "grunt",
+    "gruntplugin",
+    "security",
+    "retirejs",
+    "eslint",
+    "eslint-plugin-fasec",
+    "fasec"
+  ],
+  "author": "Fusion Alliance",
+  "contributors": [
+    "Ray Clanan <rclanan@utopianconcept.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fusionalliance/grunt-fasec.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fusionalliance/grunt-fasec/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.githubusercontent.com/fusionalliance/grunt-fasec/master/LICENSE"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-jshint": "^0.11.1",
+    "grunt-contrib-nodeunit": "^0.3.3",
+    "jshint-stylish": "^1.0.1"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.5"
+  },
+  "dependencies": {
+    "async": "^0.9.0",
+    "chalk": "^1.0.0",
+    "eslint": "^0.17.1",
+    "eslint-plugin-fasec": "^0.1.1",
+    "request": "^2.53.0",
+    "retire": "^0.4.0",
+    "safe-regex": "^1.1.0"
+  }
 }

@@ -1,15 +1,6 @@
-/*
- * grunt-fasec
- * https://github.com/Ray/grunt-fasec
- *
- * Copyright (c) 2015 Ray Clanan
- * Licensed under the MIT license.
- */
-
 'use strict';
 
 module.exports = function(grunt) {
-
   // Project configuration.
   grunt.initConfig({
     // Before generating any new files, remove any previously-created files.
@@ -25,6 +16,13 @@ module.exports = function(grunt) {
         }
       },
     },
+    jshint: {
+      support: ['Gruntfile.js'],
+      options: {
+        jshintrc: '.jshintrc'
+      },
+      files: [ '**/*.js', '!**/node_modules/**', '!Gruntfile.js' ]
+    }
   });
 
   // Actually load this plugin's task(s).
@@ -32,6 +30,7 @@ module.exports = function(grunt) {
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
@@ -40,4 +39,6 @@ module.exports = function(grunt) {
   // By default, securtiy scanner and run all tests.
   grunt.registerTask('default', ['fasec']);
 
+  // tasks to run on the CI platform
+  grunt.registerTask('ci', ['jshint']);
 };
