@@ -1,6 +1,6 @@
 # grunt-fasec
 
-> Fusion Alliance Security Scanner
+> [Fusion Alliance](https://www.fusionalliance.com/?utm_source=GitHub&utm_medium=Website&utm_campaign=OpenSource) Security Scanner
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -47,7 +47,7 @@ _(Nothing yet)_
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Fusion Alliance
+Copyright (c) 2015 [Fusion Alliance](https://www.fusionalliance.com/?utm_source=GitHub&utm_medium=Website&utm_campaign=OpenSource)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
