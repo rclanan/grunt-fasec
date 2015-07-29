@@ -1,6 +1,7 @@
-# grunt-fasec
+# Fusion Alliance Security for Node.js - Grunt Plugin
 
-> [Fusion Alliance](https://www.fusionalliance.com/?utm_source=GitHub&utm_medium=Website&utm_campaign=OpenSource) Security Scanner
+Grunt task to configure and execute [FASEC ESLint plugins](https://github.com/fusionalliance/eslint-plugin-fasec)
+
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -16,6 +17,7 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 ```js
 grunt.loadNpmTasks('grunt-fasec');
 ```
+
 
 ## The "fasec" task
 
@@ -37,11 +39,22 @@ grunt.initConfig({
 });
 ```
 
+
+### Demo
+To see FASEC in action, clone and run the [FASEC demo project](https://github.com/fusionalliance/fasec-demo).
+
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
-## Release History
-_(Nothing yet)_
+
+## Contributors
+
+[![Fusion Alliance Logo](https://avatars0.githubusercontent.com/u/1154219?v=3&u=e1451e6a65343331369d53a2b6e0c7046c2cc810&s=60)](https://github.com/FusionAlliance)
+**FASEC Grunt plugin** is a product of Fusion Alliance &copy; 2015.
+
++ [Ray Clannan](https://github.com/rclanan) (Author)
+
 
 ## LICENSE
 
