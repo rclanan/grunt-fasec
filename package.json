@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "async": "^0.9.0",
-    "chalk": "^1.0.0",
+    "chalk": "^1.1.2",
     "eslint": "^0.17.1",
     "eslint-plugin-fasec": "^0.1.1",
     "request": "^2.53.0",
