@@ -51,7 +51,7 @@
     "eslint": "^0.17.1",
     "eslint-plugin-fasec": "^0.1.1",
     "request": "^2.53.0",
-    "retire": "^0.4.0",
+    "retire": "^1.2.0",
     "safe-regex": "^1.1.0"
   }
 }
