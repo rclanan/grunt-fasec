@@ -46,7 +46,7 @@
     "grunt": "~0.4.5"
   },
   "dependencies": {
-    "async": "^0.9.0",
+    "async": "^2.1.2",
     "chalk": "^1.0.0",
     "eslint": "^0.17.1",
     "eslint-plugin-fasec": "^0.1.1",
